@@ -1,0 +1,29 @@
+{% extends 'game_api/base.html' %}{% block title %}Подтверждение действий{% endblock %} {% load static %} {% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h1 class="card-title mb-0">Подтверждение убийства игрока</h1>
+        </div>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="card-body">
+            <p class="card-text lead">Вы уверены, что хотите **убить** игрока **{{ player_to_kill.nickname }}** (ID: {{ player_to_kill.id }}) в игре #{{ game.id }}?</p>
+            <p class="card-text">Игрок будет помечен как мертвый и не сможет участвовать в дальнейших действиях.</p>
+            <p class="card-text text-danger">Это действие следует использовать для ручного вмешательства ведущего.</p>
+
+            <form action="{% url 'kill_player' game.id player_to_kill.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger me-2">Подтвердить убийство</button>
+            </form>
+            <a href="{% url 'game_detail' game.id %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

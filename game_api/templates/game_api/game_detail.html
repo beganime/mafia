@@ -1,0 +1,126 @@
+{% extends 'game_api/base.html' %} {% load static %} {% block title %}Игра #{{ game.id }} {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'game_api/css/mafia_css.css' %}">
+<div class="game-container-wrapper">
+    <div class="card shadow-sm">
+        <div class="game-header-section text-white">
+            <h1 class="game-title mb-0">Игра #{{ game.id }} - <span class="status-badge bg-game-info">{{ game.get_status_display }}</span></h1>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                <div class="app-alert app-alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <h2 class="h4 mb-4 text-center" style="color: #f0f0f0;">Текущий раунд: <span class="status-badge bg-current-round">{{ current_round.round_number }}</span> - Фаза: <span class="status-badge bg-current-phase">{{ current_round.get_phase_display }}</span></h2>
+            {% if current_round.events %}
+            <div class="mb-4">
+                <h3 class="h5 mt-4" style="color: #f0f0f0; text-align: center;">События раунда:</h3>
+                <div class="round-events-card">
+                    <pre class="mb-0 round-events-text">{{ current_round.events }}</pre>
+                </div>
+            </div>
+            {% endif %}
+
+            <h3 class="section-heading mb-3">Игроки:</h3>
+            {% if players %}
+            <div class="players-grid-layout">
+                {% for player in players %}
+                <div class="player-card-item">
+                    <img src="{% if player.is_alive %}{% static 'game_api/img/blue_card.png' %}{% else %}{% static 'game_api/img/red_card.png' %}{% endif %}" alt="Player Card">
+                    <span class="player-nickname">{{ player.nickname }}</span> {% if game.host == request.user or player == current_player_profile %}
+                    <span class="status-badge player-role-badge">{{ player.get_role_display }}</span> {% else %}
+                    <span class="status-badge player-role-badge bg-secondary">Роль скрыта</span> {% endif %}
+                    <span class="ms-2 player-status-text" style="color: #f0f0f0;">Статус:
+                        {% if player.is_alive %}
+                        <span class="status-badge status-alive">Жив</span> {% else %}
+                    <span class="status-badge status-dead">Мертв</span> {% endif %}
+                    </span>
+
+                    {% if game.host == request.user %}
+                    <div class="host-actions-group">
+                        <form action="{% url 'kill_player' game.id player.id %}" method="post" class="container">
+                            {% csrf_token %} {# Кнопка "Убить" активна только если игрок жив #}
+                            <button type="submit" class="game-button game-button-danger" {% if not player.is_alive %}disabled{% endif %}>Убить</button>
+                        </form>
+                        <form action="{% url 'revive_player' game.id player.id %}" method="post" class="container">
+                            {% csrf_token %} {# Кнопка "Воскресить" активна только если игрок мертв #}
+                            <button type="submit" class="game-button game-button-success" {% if player.is_alive %}disabled{% endif %}>Вернуть</button>
+                        </form>
+                        <a href="{% url 'change_player_role' game.id player.id %}" class="game-button game-button-primary">Сменить роль</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="app-alert app-alert-warning" role="alert">
+                В этой игре пока нет игроков.
+            </div>
+            {% endif %} {% if game.host == request.user %}
+            <hr class="section-separator">
+            <h3 class="section-heading mb-3">Действия Ведущего:</h3>
+            <div class="d-grid gap-3 d-md-flex justify-content-center">
+                <form action="{% url 'next_phase' game.id %}" method="post" class="container">
+                    {% csrf_token %}
+                    <button type="submit" class="game-button game-button-primary">Перейти к следующей фазе</button>
+                </form>
+                {% if current_round.phase == 'DAY' and game.status == 'DAY' %}
+                <form action="{% url 'start_voting' game.id %}" method="post" class="container">
+                    {% csrf_token %}
+                    <button type="submit" class="game-button game-button-primary">Начать голосование</button>
+                </form>
+                {% endif %}
+                <form action="{% url 'end_game' game.id %}" method="post" class="container">
+                    {% csrf_token %}
+                    <button type="submit" class="game-button game-button-danger">Завершить игру</button>
+                </form>
+                {% if game.status == 'LOBBY' %}
+                <a href="{% url 'game_lobby' game.id %}" class="game-button game-button-secondary">Вернуться в лобби</a> {% endif %}
+            </div>
+            {% endif %} {% if game.status == 'FINISHED' %}
+            <p class="text-center mt-4"><a href="{% url 'home' %}" class="game-button game-button-outline">Вернуться на главную</a></p>
+            {% endif %} {% if is_player_in_game and current_player_profile.is_alive and player_action_form %}
+            <hr class="section-separator"> {% if game.status == 'VOTING' %}
+            <h4 style="color: #f0f0f0;">Голосы:</h4>
+            {% for pa in player_action %}
+            <div class="cal">
+                {% if pa.round.game.id == game.id and pa.action_type == 'VOTE'%}
+                <span style="color: #15ff00;">{{pa.action_type}}_{{pa.actor}}</span> {% endif %}
+            </div>
+            {% endfor %} {% endif %}
+            <h3 class="section-heading mb-3">Ваши действия:</h3>
+            <p class="player-action-lead">Ваша роль: <strong>{{ current_player_profile.get_role_display }}</strong></p>
+            <form action="{% url 'submit_player_action' game.id %}" method="post" class="card-body">
+                {% csrf_token %} {% for field in player_action_form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-field-label">{{ field.label }}</label> {{ field }} {% if field.help_text %}
+                    <div class="form-text form-help-text">{{ field.help_text }}</div>
+                    {% endif %} {% for error in field.errors %}
+                    <div class="invalid-feedback form-error-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="game-button game-button-success mt-3">Отправить действие</button>
+            </form>
+            {% elif is_player_in_game and not current_player_profile.is_alive %}
+            <hr class="section-separator">
+            <div class="dead-player-info-block">
+                <h4 class="dead-player-heading">Вы мертвы!</h4>
+                <p>К сожалению, вы выбыли из игры и не можете совершать действия.</p>
+                <p class="mb-0">Вы можете наблюдать за ходом игры.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    setInterval(() => {
+        location.reload();
+    }, 10000); // каждые 10 секунд обновляет страничку
+</script>
+{% endblock %}

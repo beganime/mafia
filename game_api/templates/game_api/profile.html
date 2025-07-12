@@ -1,0 +1,34 @@
+{% extends 'game_api/base.html' %} {% block title %}Профиль - {{ user.username }}{% endblock %}{% block content %}
+<div class="container">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="profile-container">
+                <h2>Ваш Профиль</h2>
+                <div class="profile-info">
+                    <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Имя:</strong> {{ user.first_name }}</p>
+                    <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+                    <p><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d M Y H:i" }}</p>
+                    <p><strong>Последний вход:</strong> {{ user.last_login|date:"d M Y H:i" }}</p>
+                </div>
+                <div class="profile-actions">
+                    <a href="{% url 'profile_edit' %}" class="btn btn-primary me-2">Редактировать профиль</a>
+                    <a href="{% url 'profile_delete' %}" class="btn btn-danger">Удалить аккаунт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p><a href="{% url 'home' %}" class="btn btn-outline-primary">Вернуться на главную</a></p>
+
+</div>
+{% endblock %}

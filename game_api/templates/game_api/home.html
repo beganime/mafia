@@ -1,0 +1,121 @@
+{% extends 'game_api/base.html' %} {% load static %} {% block title %}Мафия Онлайн{% endblock %} {% block extra_css %} {% endblock %} {% block content %}
+<div class="container">
+    <div class="hero-section text-center">
+        <div class="hero-content">
+            <h1 class="display-3">Добро пожаловать в Мафию Онлайн!</h1>
+            <p class="lead">Присоединяйтесь к друзьям или новым игрокам в захватывающей игре обмана и интриг.</p>
+
+            {% if not user.is_authenticated %}
+            <div class="d-grid gap-2 col-md-8 mx-auto">
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3">Начать играть! (Регистрация)</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">У меня уже есть аккаунт (Войти)</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container mt-3">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if user.is_authenticated %}
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/plus.png' %}" alt="создать игру" style="margin: 20px;">
+                    <h5 class="card-title">Создать новую игру</h5>
+                    <p class="card-text">Будьте ведущим и приглашайте друзей для игры в Мафию.</p>
+                    <a href="{% url 'create_game' %}" class="btn btn-create-game">Создать игру</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/users.png' %}" alt="люди" width="130px">
+                    <h5 class="card-title">Присоединиться к игре</h5>
+                    <p class="card-text">Найдите существующую игру по коду и присоединитесь к ней.</p>
+                    <a href="{% url 'join_game' %}" class="btn btn-join-game">Присоединиться</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/favicon3.png' %}" alt="войти как игрок" width="130px" style="margin: 20px;">
+                    <h5 class="card-title">Наблюдать за игрой</h5>
+                    <p class="card-text">Найдите игру которая сейчас активна и наблюдайте за игрой ваших друзей</p>
+                    <a href="{% url 'search_game' %}" class="btn btn-search-game">Найти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/user.png' %}" alt="ваш профиль" width="150px">
+                    <h5 class="card-title">Ваш профиль</h5>
+                    <p class="card-text">Посетите свой профиль или выйдите из аккаунта.</p>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-secondary me-2">Профиль</a>
+                    <a href="{% url 'user_logout' %}" class="btn btn-danger">Выйти</a>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/sign_in.png' %}" alt="войти" width="150px">
+                    <h5 class="card-title">Войти</h5>
+                    <p class="card-text">У вас уже есть аккаунт? Войдите, чтобы создать новую игру.</p>
+                    <a href="{% url 'login' %}" class="btn btn-auth-action">Войти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/reg.png' %}" alt="регистрация" width="150px">
+                    <h5 class="card-title">Зарегистрироваться</h5>
+                    <p class="card-text">Создайте бесплатный аккаунт и начните играть в Мафию.</p>
+                    <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/guests.png' %}" alt="войти как игрок" width="130px">
+                    <h5 class="card-title">Присоединиться без регистрации</h5>
+                    <p class="card-text">Войдите в игру без регистрации, используя код.</p>
+                    <a href="{% url 'join_game' %}" class="btn btn-join-game">Присоединиться</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card action-card shadow">
+                <div class="card-body">
+                    <img src="{% static 'game_api/img/favicon3.png' %}" alt="войти как игрок" width="130px">
+                    <h5 class="card-title">Наблюдать за игрой</h5>
+                    <p class="card-text">Наблюдайте за игрой ваших друзей без регистрации и входа в аккаунт.</p>
+                    <a href="{% url 'search_game' %}" class="btn btn-sm btn-outline-primary">Найти</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

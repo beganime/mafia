@@ -1,0 +1,16 @@
+{% extends 'game_api/base.html' %} {% block title %}Войти{% endblock %}{% block content %}
+<h2>Вход</h2>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary me-2">Войти</button>
+</form>
+{% endblock %}

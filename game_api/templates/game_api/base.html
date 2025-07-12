@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'game_api/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'game_api/css/base.css' %}">
+
+    <link rel="shortcut icon" href="{% static 'game_api/img/favicon1.png' %}" type="image/x-icon"> {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'game_api/img/icon.png' %}" alt="Мафия Иконка" class="navbar-icon"> МАФИЯ
+            </a>
+            <div class="reverse navbar-reverse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_game' %}">Создать игру</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'join_game' %}">Присоединиться</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_logout' %}">Выйти</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        {% block content %} {% endblock %}
+    </div>
+
+    <script src="{% static 'game_api/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+<footer class="bg-dark">v.1.1</footer>
+
+</html>

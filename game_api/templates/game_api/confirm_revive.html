@@ -1,0 +1,20 @@
+{% extends 'game_api/base.html' %} {% block title %}Подтверждение действий{% endblock %}{% load static %} {% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h1 class="card-title mb-0">Подтверждение воскрешения игрока</h1>
+        </div>
+        <div class="card-body">
+            <p class="card-text lead">Вы уверены, что хотите **воскресить** игрока **{{ player_to_revive.nickname }}** (ID: {{ player_to_revive.id }}) в игре #{{ game.id }}?</p>
+            <p class="card-text">Игрок будет помечен как живой и сможет участвовать в дальнейших действиях.</p>
+            <p class="card-text text-info">Это действие следует использовать для ручного вмешательства ведущего.</p>
+
+            <form action="{% url 'revive_player' game.id player_to_revive.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success me-2">Подтвердить воскрешение</button>
+            </form>
+            <a href="{% url 'game_detail' game.id %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,213 @@
+body {
+    background: linear-gradient(to bottom, #121212 0%, #1a0000 70%, #2a0000 100%);
+    color: #e0e0e0;
+    font-family: 'Georgia', serif;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.join-game-container {
+    max-width: 600px;
+    width: 90%;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 0 45px rgba(255, 0, 0, 0.5);
+    padding: 40px;
+    border: 2px solid #a00000;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    margin: 30px auto;
+}
+
+.join-game-container h1 {
+    color: #ff3333;
+    font-size: 2.8rem;
+    text-shadow: 0 0 12px rgba(255, 51, 51, 0.9);
+    font-weight: bold;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.join-game-container .messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.join-game-container .messages li {
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    text-align: left;
+}
+
+.join-game-container .messages li.success {
+    background-color: #007000;
+    color: #fff;
+    border-color: #009000;
+}
+
+.join-game-container .messages li.error {
+    background-color: #a00000;
+    color: #fff;
+    border-color: #ff3333;
+}
+
+.join-game-container .messages li.warning {
+    background-color: #9C5100;
+    color: #fff;
+    border-color: #C16A00;
+}
+
+.join-game-container .messages li.info {
+    background-color: #555555;
+    color: #e0e0e0;
+    border-color: #777777;
+}
+
+.join-game-container form p {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.join-game-container form p label {
+    color: #ff3333;
+    font-weight: bold;
+    font-size: 1.15rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.game-container {
+    margin: 10px auto;
+    max-width: 600px;
+    width: 90%;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    border: 2px solid #a00000;
+    text-align: center;
+}
+
+.id_game,
+form p input[type="text"] {
+    background-color: rgba(40, 40, 40, 0.8) !important;
+    border: 1px solid #ff3333 !important;
+    color: #f0f0f0 !important;
+    border-radius: 10px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.05rem;
+}
+
+.id_game:focus {
+    background-color: rgba(60, 60, 60, 0.9) !important;
+    border-color: #ff3333 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 51, 51, 0.4) !important;
+    outline: none;
+}
+
+.join-game-container .game-button {
+    font-size: 1.3rem;
+    padding: 15px 35px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    margin: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+.join-game-container .game-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.join-game-container .game-button-primary {
+    background-color: #ff3333 !important;
+    border: 1px solid #ff3333 !important;
+    color: #fff !important;
+}
+
+.join-game-container .game-button-primary:hover {
+    background-color: #a00000 !important;
+    border-color: #a00000 !important;
+    box-shadow: 0 0 25px rgba(255, 51, 51, 0.8) !important;
+}
+
+.join-game-container .game-button-outline {
+    color: #ff3333 !important;
+    border: 1px solid #ff3333 !important;
+    background-color: transparent !important;
+}
+
+.join-game-container .game-button-outline:hover {
+    background-color: #ff3333 !important;
+    color: #121212 !important;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 15px;
+    }
+    .join-game-container {
+        padding: 25px;
+        border-radius: 15px;
+        margin: 100px auto;
+    }
+    .join-game-container h1 {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+    .join-game-container form p label {
+        font-size: 1.0rem;
+    }
+    .id_game,
+    .join-game-container form p input[type="text"],
+    .join-game-container form p input[type="password"] {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+    .join-game-container .game-button {
+        font-size: 1.1rem;
+        padding: 12px 25px;
+        border-radius: 10px;
+        margin: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .join-game-container {
+        padding: 20px;
+        border-radius: 10px;
+        margin: 100px auto;
+    }
+    .join-game-container h1 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    .join-game-container form p label {
+        font-size: 0.9rem;
+    }
+    .id_game,
+    .join-game-container form p input[type="text"],
+    .join-game-container form p input[type="password"] {
+        padding: 10px;
+        font-size: 0.7rem;
+    }
+    .join-game-container .game-button {
+        font-size: 0.7rem;
+        padding: 10px 20px;
+        margin: 5px;
+    }
+}

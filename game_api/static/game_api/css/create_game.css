@@ -1,0 +1,169 @@
+body {
+    background: linear-gradient(to bottom, #121212 0%, #1a0000 70%, #2a0000 100%);
+    color: #e0e0e0;
+    font-family: 'Georgia', serif;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.create-game-container {
+    margin: 10px auto;
+    max-width: 600px;
+    width: 90%;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 0 45px rgba(255, 0, 0, 0.5);
+    padding: 40px;
+    border: 2px solid #a00000;
+    text-align: center;
+}
+
+.game-container {
+    margin: 10px auto;
+    max-width: 600px;
+    width: 90%;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    border: 2px solid #a00000;
+    text-align: center;
+}
+
+.create-game-container h2 {
+    color: #ff3333;
+    font-size: 2.8rem;
+    text-shadow: 0 0 12px rgba(255, 51, 51, 0.9);
+    font-weight: bold;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.create-game-container form p {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.create-game-container form p label {
+    color: #ff3333;
+    font-weight: bold;
+    font-size: 1.15rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.create-game-container form p input[type="text"],
+.create-game-container form p input[type="number"] {
+    background-color: rgba(40, 40, 40, 0.8) !important;
+    border: 1px solid #ff3333 !important;
+    color: #f0f0f0 !important;
+    border-radius: 10px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.05rem;
+}
+
+.create-game-container form p input[type="text"]:focus,
+.create-game-container form p input[type="number"]:focus {
+    background-color: rgba(60, 60, 60, 0.9) !important;
+    border-color: #ff3333 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 51, 51, 0.4) !important;
+    outline: none;
+}
+
+.create-game-container .game-button {
+    font-size: 1.3rem;
+    padding: 15px 35px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    margin: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+.create-game-container .game-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.create-game-container .game-button-primary {
+    background-color: #ff3333 !important;
+    border: 1px solid #ff3333 !important;
+    color: #fff !important;
+}
+
+.create-game-container .game-button-primary:hover {
+    background-color: #a00000 !important;
+    border-color: #a00000 !important;
+    box-shadow: 0 0 25px rgba(255, 51, 51, 0.8) !important;
+}
+
+.create-game-container .game-button-outline {
+    color: #ff3333 !important;
+    border: 1px solid #ff3333 !important;
+    background-color: transparent !important;
+}
+
+.create-game-container .game-button-outline:hover {
+    background-color: #ff3333 !important;
+    color: #121212 !important;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 20px;
+        align-items: flex-start;
+    }
+    .create-game-container {
+        padding: 25px;
+        border-radius: 15px;
+    }
+    .create-game-container h2 {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+    .create-game-container form p label {
+        font-size: 1.0rem;
+    }
+    .create-game-container form p input[type="text"],
+    .create-game-container form p input[type="number"] {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+    .create-game-container .game-button {
+        font-size: 1.1rem;
+        padding: 12px 25px;
+        border-radius: 10px;
+        margin: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-game-container {
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .create-game-container h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    .create-game-container form p label {
+        font-size: 0.95rem;
+    }
+    .create-game-container form p input[type="text"],
+    .create-game-container form p input[type="number"] {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    .create-game-container .game-button {
+        font-size: 1.0rem;
+        padding: 10px 20px;
+        margin: 5px;
+    }
+}

@@ -1,0 +1,18 @@
+{% extends 'game_api/base.html' %} {% block title %}Удаление аккаунта{% endblock %}{% block content %}
+<h2>Удаление Аккаунта</h2>
+<p>Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо.</p>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить аккаунт</button>
+    <a href="{% url 'profile' %}" class="btn btn-warning" style="margin-left: 10px;">Отмена</a>
+</form>
+{% endblock %}
